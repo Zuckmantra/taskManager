@@ -1,0 +1,398 @@
+:root {
+  color-scheme: light;
+  --bg-0: #f5f1e8;
+  --bg-1: #fffaf0;
+  --panel: #fffefa;
+  --ink: #21201c;
+  --ink-soft: #5d5648;
+  --line: #dccfb5;
+  --brand: #c24f2a;
+  --brand-dark: #96361b;
+  --ok: #2b7f5d;
+  --danger: #b33939;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "DM Sans", "Segoe UI", sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 15% 10%, #ffd8a8 0%, transparent 35%),
+    radial-gradient(circle at 85% 90%, #f7c3ae 0%, transparent 35%),
+    linear-gradient(160deg, var(--bg-0), var(--bg-1));
+  min-height: 100vh;
+}
+
+.auth-shell,
+.app-shell {
+  width: min(960px, 92vw);
+  margin: 2.5rem auto;
+}
+
+.auth-card,
+.task-form,
+.task-list,
+.app-header {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 12px 24px rgba(114, 82, 24, 0.08);
+}
+
+.auth-card {
+  width: min(480px, 100%);
+  margin: 0 auto;
+  padding: 2rem;
+  animation: fade-up 400ms ease;
+}
+
+h1,
+h2,
+h3,
+.eyebrow {
+  font-family: "Outfit", "Segoe UI", sans-serif;
+}
+
+.eyebrow {
+  margin: 0;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: var(--ink-soft);
+}
+
+h1 {
+  margin: 0.4rem 0;
+}
+
+.subtext {
+  margin-top: 0;
+  color: var(--ink-soft);
+}
+
+label {
+  display: grid;
+  gap: 0.45rem;
+  margin-bottom: 1rem;
+  font-size: 0.92rem;
+}
+
+input,
+textarea {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 0.7rem 0.8rem;
+  font: inherit;
+  background: #fff;
+}
+
+textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.btn {
+  border: 0;
+  border-radius: 12px;
+  padding: 0.7rem 1rem;
+  cursor: pointer;
+  font: 600 0.92rem "DM Sans", sans-serif;
+  transition: transform 150ms ease, background 150ms ease;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+}
+
+.btn-primary {
+  background: var(--brand);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--brand-dark);
+}
+
+.btn-soft {
+  background: #f0e7d7;
+  color: var(--ink);
+}
+
+.btn-success {
+  background: var(--ok);
+  color: #fff;
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: #fff;
+}
+
+.btn-full {
+  width: 100%;
+}
+
+.link-btn {
+  background: transparent;
+  border: 0;
+  color: var(--brand-dark);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-link {
+  margin-top: 1rem;
+  text-align: center;
+  color: var(--ink-soft);
+}
+
+.app-header {
+  padding: 1.3rem;
+  margin-bottom: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.stat-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0.9rem;
+  box-shadow: 0 10px 20px rgba(114, 82, 24, 0.07);
+}
+
+.stat-card p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.stat-card strong {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 1.55rem;
+  font-family: "Outfit", "Segoe UI", sans-serif;
+}
+
+.task-toolbar {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.task-toolbar input {
+  height: 46px;
+}
+
+.filter-row {
+  display: inline-flex;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.filter-row .btn {
+  min-width: 102px;
+}
+
+.filter-row .btn.is-active {
+  background: var(--brand);
+  color: #fff;
+}
+
+.task-form,
+.task-list {
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.task-form {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.task-form h2,
+.task-list h2 {
+  margin: 0;
+}
+
+.task-form-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1.2fr auto;
+  gap: 0.75rem;
+  align-items: end;
+}
+
+.task-form-grid input,
+.task-form-grid textarea {
+  width: 100%;
+  margin: 0;
+}
+
+.task-form-grid textarea {
+  min-height: 48px;
+}
+
+.task-form-grid .btn {
+  height: 48px;
+  white-space: nowrap;
+}
+
+.task-stack {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.task-item {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0.95rem;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+}
+
+.task-item.completed {
+  background: #f3faf5;
+}
+
+.task-item.completed h3 {
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  color: #4c675b;
+}
+
+.task-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.task-body h3 {
+  margin: 0 0 0.4rem;
+  line-height: 1.25;
+}
+
+.task-body p {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.task-body small {
+  display: inline-block;
+  margin-top: 0.45rem;
+  color: #897f69;
+  font-size: 0.8rem;
+}
+
+.task-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.check-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #f7f0e3;
+  font-size: 0.8rem;
+}
+
+.task-actions .btn {
+  padding-inline: 0.9rem;
+}
+
+.edit-grid {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.loading,
+.empty-state,
+.error-message,
+.success-message {
+  margin: 0.7rem 0;
+  padding: 0.8rem;
+  border-radius: 10px;
+}
+
+.loading,
+.empty-state {
+  background: #efe8d8;
+}
+
+.error-message {
+  background: #ffe7e7;
+  color: #7b1717;
+}
+
+.success-message {
+  background: #e6f5ec;
+  color: #1f5e3f;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 640px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .task-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-row .btn {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .task-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .task-form-grid .btn {
+    width: 100%;
+  }
+
+  .app-header,
+  .task-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .task-actions {
+    justify-content: flex-start;
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "name": "taskmanager-backend",
+  "version": "1.0.0",
+  "description": "API para gesti\u00f3n de tareas",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "DB_HOST=$(ip route | grep default | awk '{print $3}') nodemon server.js",
+    "create:user": "node scripts/createUser.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "mysql2": "^3.2.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.0",
+    "dotenv": "^16.0.3",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
