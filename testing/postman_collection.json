@@ -1,0 +1,116 @@
+{
+  "info": {
+    "name": "TaskManager API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "item": [
+    {
+      "name": "Register",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"juan\",\n  \"email\": \"juan@example.com\",\n  \"password\": \"pass1234\"\n}"
+        },
+        "url": { "raw": "{{baseUrl}}/api/register", "host": ["{{baseUrl}}"], "path": ["api","register"] }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 201\", function () {\n  pm.response.to.have.status(201);\n});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"email\": \"juan@example.com\",\n  \"password\": \"pass1234\"\n}" },
+        "url": { "raw": "{{baseUrl}}/api/login", "host": ["{{baseUrl}}"], "path": ["api","login"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test('Login returns 200', function() { pm.response.to.have.status(200); });",
+              "var json = pm.response.json();",
+              "pm.test('Has token', function() { pm.expect(json).to.have.property('token'); });",
+              "pm.environment.set('authToken', json.token);"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get Tasks",
+      "request": {
+        "method": "GET",
+        "header": [ { "key": "Authorization", "value": "Bearer {{authToken}}" } ],
+        "url": { "raw": "{{baseUrl}}/api/tasks", "host": ["{{baseUrl}}"], "path": ["api","tasks"] }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": { "exec": [ "pm.test('GET tasks 200', function(){ pm.response.to.have.status(200); });" ], "type": "text/javascript" }
+        }
+      ]
+    },
+    {
+      "name": "Create Task",
+      "request": {
+        "method": "POST",
+        "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{authToken}}" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"title\": \"Comprar leche\",\n  \"description\": \"Ir al supermercado\"\n}" },
+        "url": { "raw": "{{baseUrl}}/api/tasks", "host": ["{{baseUrl}}"], "path": ["api","tasks"] }
+      },
+      "event": [ { "listen": "test", "script": { "exec": [ "pm.test('Create task 201', function(){ pm.response.to.have.status(201); });", "var json = pm.response.json();", "pm.environment.set('taskId', json.id || json.ID || json.insertId || json.task_id);" ], "type": "text/javascript" } } ]
+    },
+    {
+      "name": "Update Task",
+      "request": {
+        "method": "PUT",
+        "header": [ { "key": "Content-Type", "value": "application/json" }, { "key": "Authorization", "value": "Bearer {{authToken}}" } ],
+        "body": { "mode": "raw", "raw": "{\n  \"title\": \"Comprar leche y pan\",\n  \"description\": \"Supermercado\",\n  \"completed\": true\n}" },
+        "url": { "raw": "{{baseUrl}}/api/tasks/{{taskId}}", "host": ["{{baseUrl}}"], "path": ["api","tasks","{{taskId}}"] }
+      },
+      "event": [ { "listen": "test", "script": { "exec": [ "pm.test('Update task 200', function(){ pm.response.to.have.status(200); });" ], "type": "text/javascript" } } ]
+    },
+    {
+      "name": "Delete Task",
+      "request": { "method": "DELETE", "header": [ { "key": "Authorization", "value": "Bearer {{authToken}}" } ], "url": { "raw": "{{baseUrl}}/api/tasks/{{taskId}}", "host": ["{{baseUrl}}"], "path": ["api","tasks","{{taskId}}"] } , "event": [ { "listen": "test", "script": { "exec": [ "pm.test('Delete task 200', function(){ pm.response.to.have.status(200); });" ], "type": "text/javascript" } } ] }
+    },
+    {
+      "name": "Forgot Password",
+      "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"email\": \"juan@example.com\"\n}" }, "url": { "raw": "{{baseUrl}}/api/forgot-password", "host": ["{{baseUrl}}"], "path": ["api","forgot-password"] } },
+      "event": [ { "listen": "test", "script": { "exec": [ "pm.test('Forgot returns 200', function(){ pm.response.to.have.status(200); });", "var j = pm.response.json(); if (j.token) { pm.environment.set('resetToken', j.token); }" ], "type": "text/javascript" } } ]
+    },
+    {
+      "name": "Reset Password",
+      "request": { "method": "POST", "header": [ { "key": "Content-Type", "value": "application/json" } ], "body": { "mode": "raw", "raw": "{\n  \"token\": \"{{resetToken}}\",\n  \"password\": \"newpass123\"\n}" }, "url": { "raw": "{{baseUrl}}/api/reset-password", "host": ["{{baseUrl}}"], "path": ["api","reset-password"] } },
+      "event": [ { "listen": "test", "script": { "exec": [ "pm.test('Reset returns 200', function(){ pm.response.to.have.status(200); });" ], "type": "text/javascript" } } ]
+    },
+    {
+      "name": "Notifications",
+      "request": { "method": "GET", "header": [ { "key": "Authorization", "value": "Bearer {{authToken}}" } ], "url": { "raw": "{{baseUrl}}/api/notifications", "host": ["{{baseUrl}}"], "path": ["api","notifications"] } , "event": [ { "listen": "test", "script": { "exec": [ "pm.test('Notifications 200', function(){ pm.response.to.have.status(200); });" ], "type": "text/javascript" } } ] }
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": { "exec": [], "type": "text/javascript" }
+    }
+  ]
+}
